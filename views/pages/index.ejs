@@ -1,0 +1,71 @@
+<%- include('../header') %>
+
+    <%- include('../head') %>
+
+        <div class="container">
+            <% if( errors && Object.keys(errors)  && errors.head ) {  %>
+                <span><%= errors.head %></span>
+            <% } %>
+            <div class="row">
+                <div class="col">
+                    <h3>Task management system</h3>
+                    <div class="form-wrapper">
+                        <form action="/addtask" method="post">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" name="title" id="title" class="form-control" value="<%= data.title %>">
+                                <% if( hasError && Object.keys(errors).length > 0 && errors.title ) { %>
+                                    <span class="error"><%= errors.title %></span>
+                                <% } %>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Description</label>
+                                <textarea name="description" id="description" cols="20" rows="5"
+                                    class="form-control">
+                                    <%= data.description %>
+                                </textarea>
+                                <% if( hasError && Object.keys(errors).length > 0 && errors.description ) { %>
+                                    <span class="error"><%= errors.description %></span>
+                                <% } %>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" id="submit" class="form-control submit-btn" value="Add new task">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col">
+                    <% if( tasks && tasks.length > 0 ) {  %>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>S.no</th>
+                                    <th>Title</th>
+                                    <th>Description</th>
+                                    <th>operation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% tasks.forEach((data, index) =>  { %>
+                                    <tr>
+                                        <td><%= index+1 %></td>
+                                        <td><%= data.taskTitle %></td>
+                                        <td><%= data.taskDescription %></td>
+                                        <td>
+                                            <a href="/update/<%= data.id %>">Edit |</a>
+                                            <a href="/delete/<%= data.id %>">Delete |</a>
+                                            <a href="/view/<%= data.id %>">View</a>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            </tbody>
+                        </table>
+                    <% } else { %>
+                        <h3>No tasks.</h3>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+
+        <%- include('../footer') %>

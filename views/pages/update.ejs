@@ -1,0 +1,12 @@
+<%- include('../header') %>
+
+    <%- include('../head') %>
+
+        <% if( task && !hasError ) {  %>
+            <h1>Title : <%= task.taskTitle %></h1>
+            <p>Description:  <%= task.taskDescription %> </p>
+        <% } else { %>
+            <p><%= errors.head %></p>
+        <% } %>
+        
+    <%- include('../footer') %>
