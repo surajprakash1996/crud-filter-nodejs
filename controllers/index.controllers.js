@@ -1,10 +1,40 @@
 const db = require('../models/index.models');
 const Taskmodel = db.taskModel;
+const Op = db.op;
+
 
 exports.getIndex = async (req, res) => {
 
+    const filter = {};
+    let hasQuery = false;
+    let search = '';
+    
+    if( req.query ) {
+        if( req.query.sortby ) {
+            let ordertype = req.query.sortby ? req.query.sortby : 'asc';
+            filter.order = [
+                ['taskTitle', ordertype]
+            ]
+            hasQuery = true;
+        }
+
+        if(req.query.tasksearch) {
+             search = req.query.tasksearch ? req.query.tasksearch : '';
+            filter.where = {
+                [Op.or]: [
+                    {
+                      taskTitle: {
+                        [Op.like]: "%" + search + "%",
+                      },
+                    },
+                  ],
+            }
+            hasQuery = true;
+        }
+    }
+
     try {
-        const tasks = await Taskmodel.findAll();
+        const tasks = await Taskmodel.findAll(filter);
         res.render('./pages/index', {
             pageTitle: 'Home',
             data: {
@@ -13,7 +43,9 @@ exports.getIndex = async (req, res) => {
             },
             hasError: false,
             errors: {},
-            tasks: tasks ? tasks : []
+            tasks: tasks ? tasks : [],
+            searched: search,
+            hasQuery: hasQuery
         });
 
     }

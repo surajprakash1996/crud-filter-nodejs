@@ -1,4 +1,4 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { Sequelize, DataTypes, Op } = require('sequelize');
 const { connection } = require('../config/config');
 const TaskModel = require('./task.model');
 
@@ -26,6 +26,7 @@ const db = {};
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 db.dataTypes = DataTypes;
+db.op = Op;
 
 db.taskModel = TaskModel(db.sequelize, db.dataTypes);
 

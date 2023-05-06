@@ -36,6 +36,25 @@
                 </div>
                 <div class="col">
                     <% if( tasks && tasks.length > 0 ) {  %>
+                        <div class="filter-section">
+                            <form action="/" method="get" id="sort-filter">
+                                <div class="form-control">
+                                    <label for="sortby">Sort by</label>
+                                    <select name="sortby" id="sortby">
+                                        <option value="">Choose sort type</option>
+                                        <option value="asc">Alphabet - A to Z order</option>
+                                        <option value="desc">Alphabet - Z to A order</option>
+                                    </select>
+                                </div>
+                            </form>
+                            <!-- search task -->
+                            <form action="/" method="get" id="search-filter">
+                                <div class="form-control">
+                                    <label for="search-task">Search</label>
+                                    <input type="search" name="tasksearch" id="search-by-title" value="<%= searched %>">
+                                </div>
+                            </form>
+                        </div>
                         <table>
                             <thead>
                                 <tr>
